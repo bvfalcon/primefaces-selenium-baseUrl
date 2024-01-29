@@ -9,6 +9,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <primefaces.version>13.0.5</primefaces.version>
         <owb.version>2.0.27</owb.version>
         <jetty.version>9.4.53.v20231009</jetty.version>
         <jetty.port>8080</jetty.port>
@@ -17,7 +18,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>13.0.5</version>
+            <version>${primefaces.version}</version>
         </dependency>
         <!-- javax.* APIs -->
         <dependency>
@@ -94,6 +95,12 @@
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces-selenium-components</artifactId>
+            <version>${primefaces.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -110,6 +117,16 @@
     </repositories>
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <argLine>
+                        --add-opens=java.base/java.lang=ALL-UNNAMED
+                        --add-opens=java.naming/javax.naming.spi=ALL-UNNAMED
+                    </argLine>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
